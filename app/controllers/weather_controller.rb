@@ -48,9 +48,9 @@ class WeatherController < ApplicationController
     }
     response = RestClient.get(WEATHER_BASE_URL, options)
     Rails.logger.debug("Response: #{response.code}, #{JSON.parse(response.body)}")
-      # if response.code != 200
+    if response.code != 200
       raise StandardError.new "There was a problem requesting the forecast"
-    # end
+    end
     response
   end
 
