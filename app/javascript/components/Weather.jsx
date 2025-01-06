@@ -4,9 +4,13 @@ import Forecast from "./forecast/Forecast";
 export default () => {
   const inputRef = useRef(null);
   const postalCodeRef = useRef(null);
-  // Add state for error
+  // Add state for error when a postal code is not available
   const [hasError, setHasError] = React.useState(false);
+
+  // API request error
   const [hasRequestError, setHasRequestError] = React.useState(false);
+
+  // handle weather forecast data
   const [hasForecastData, setHasForecastData] = React.useState(false);
   const [forecastData, setForecastData] = React.useState(null);
   const [currentWeather, setCurrentWeather] = React.useState(null);
@@ -26,6 +30,7 @@ export default () => {
       let postal_code = "";
       for (const component of place.address_components) {
         const componentType = component.types[0];
+        // get just the postal code
         switch (componentType) {
           case "postal_code": {
             postal_code = `${component.long_name}`;
@@ -45,11 +50,13 @@ export default () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const postal_code = postalCodeRef.current.value;
+
+    // initialize display and data
     setHasRequestError(false);
     setForecastData(null);
     setCurrentWeather(null);
 
-    // Send POST request to forecast endpoint
+    // Send POST request to weather forecast endpoint
     fetch('/forecast', {
       method: 'POST',
       headers: {
@@ -89,11 +96,6 @@ export default () => {
                 Enter an address that resolves to a postal code
               </div>
             )}
-            {hasRequestError && (
-              <div className="invalid-feedback">
-                Error returning the forecast
-              </div>
-            )}
             <input
               ref={postalCodeRef}
               type="hidden"
@@ -104,6 +106,11 @@ export default () => {
             Submit
           </button>
         </form>
+        {hasRequestError && (
+          <div className="invalid-feedback">
+            Error returning the forecast. Please try again later.
+          </div>
+        )}
         {hasForecastData && (
           <Forecast
             currentWeather={currentWeather}

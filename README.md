@@ -1,24 +1,17 @@
-# README
+# rails_weather
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application lets you get a current forecast and a 5 day forecast
 
-Things you may want to cover:
+## Software versions
+Ruby 3.3.6
+Rails 8.0.1
+Redis 5.3
 
-* Ruby version
+## Weather provider
+Data is requested from [WeatherAPI.com] (http://weatherapi.com). They have a generous free plan
 
-* System dependencies
+# Configuration
+Copy env.example to .env and add a weatherapi.com API key.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
 
 * ...

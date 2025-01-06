@@ -43,8 +43,9 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 
 gem "dotenv"
-gem "rest-client"
 gem "redis"
+gem "rest-client"
+gem "rspec-rails"
 gem "weather-api", "~> 1.4"
 
 group :development, :test do

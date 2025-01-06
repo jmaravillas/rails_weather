@@ -26,7 +26,7 @@ class WeatherController < ApplicationController
         Rails.logger.error("Forecast error: #{e.message}")
         return render json: { error: "Unable to fetch weather forecast" }, status: :internal_server_error
       end
-      # save forecast for 30 minutes
+      # cache the forecast in redis for 30 minutes
       REDIS_CLIENT.setex("#{postal_code}", CACHE_TTL_SECONDS, resp.to_json)
     end
 
@@ -34,6 +34,9 @@ class WeatherController < ApplicationController
     render json: resp
   end
 
+  private
+
+  # Request the current and 5 day forecast from the weather provider
   def forecast_request(postal_code)
     options = {
       params: {
@@ -51,6 +54,7 @@ class WeatherController < ApplicationController
     response
   end
 
+  # Create a hash of the forecast data we're interested in
   def forecast_response(json_response)
     forecast_days = json_response["forecast"]["forecastday"]
     {
