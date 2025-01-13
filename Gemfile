@@ -45,7 +45,6 @@ gem "thruster", require: false
 gem "dotenv"
 gem "redis"
 gem "rest-client"
-gem "rspec-rails"
 gem "weather-api", "~> 1.4"
 
 group :development, :test do
@@ -62,4 +61,11 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+end
+
+group :test do
+  gem "minitest"
+  gem "minitest-rails"
+  gem "minitest-reporters"  # For better test output formatting
+  gem "mocha"
 end
